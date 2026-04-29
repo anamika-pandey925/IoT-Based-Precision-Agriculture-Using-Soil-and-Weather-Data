@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/IoT-Based-Precision-Agriculture-Using-Soil-and-Weather-Data/static/css/main.dc4d6ff2.css",
+    "main.js": "/IoT-Based-Precision-Agriculture-Using-Soil-and-Weather-Data/static/js/main.e39f089f.js",
+    "static/media/logo.svg": "/IoT-Based-Precision-Agriculture-Using-Soil-and-Weather-Data/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/IoT-Based-Precision-Agriculture-Using-Soil-and-Weather-Data/index.html",
+    "main.dc4d6ff2.css.map": "/IoT-Based-Precision-Agriculture-Using-Soil-and-Weather-Data/static/css/main.dc4d6ff2.css.map",
+    "main.e39f089f.js.map": "/IoT-Based-Precision-Agriculture-Using-Soil-and-Weather-Data/static/js/main.e39f089f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dc4d6ff2.css",
+    "static/js/main.e39f089f.js"
+  ]
+}
