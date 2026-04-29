@@ -1,0 +1,41 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.chatSection { min-height: 600px; }
+
+.scanCard {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-color);
+  padding: var(--space-6);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.scanIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--color-success-light);
+  color: var(--color-primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+}
+
+.scanCard h3 { font-size: var(--font-size-lg); color: var(--text-primary); }
+.scanCard p  { font-size: var(--font-size-sm); color: var(--text-secondary); line-height: var(--line-height-loose); }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+}

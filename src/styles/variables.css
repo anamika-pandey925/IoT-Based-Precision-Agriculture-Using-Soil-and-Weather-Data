@@ -1,0 +1,187 @@
+/* ============================================
+   AgriSense v2 — Premium Design Tokens
+   ============================================ */
+
+:root {
+  /* ── Brand Palette ── */
+  --green-50:  #f0fdf4;
+  --green-100: #dcfce7;
+  --green-200: #bbf7d0;
+  --green-400: #4ade80;
+  --green-500: #22c55e;
+  --green-600: #16a34a;
+  --green-700: #15803d;
+  --green-900: #14532d;
+
+  --emerald-400: #34d399;
+  --emerald-500: #10b981;
+  --emerald-600: #059669;
+
+  --teal-400: #2dd4bf;
+  --teal-500: #14b8a6;
+
+  /* ── Primary Brand ── */
+  --color-primary:       var(--green-500);
+  --color-primary-dark:  var(--green-600);
+  --color-primary-light: var(--green-400);
+  --color-primary-glow:  rgba(34, 197, 94, 0.25);
+
+  /* ── Accent ── */
+  --color-accent:        #6366f1;   /* indigo */
+  --color-accent-dark:   #4f46e5;
+  --color-accent-glow:   rgba(99, 102, 241, 0.25);
+
+  /* ── Semantic ── */
+  --color-danger:        #f43f5e;
+  --color-danger-dark:   #e11d48;
+  --color-danger-light:  rgba(244, 63, 94, 0.12);
+  --color-warning:       #f59e0b;
+  --color-warning-dark:  #d97706;
+  --color-warning-light: rgba(245, 158, 11, 0.12);
+  --color-success:       var(--green-500);
+  --color-success-light: rgba(34, 197, 94, 0.12);
+  --color-info:          #38bdf8;
+  --color-info-light:    rgba(56, 189, 248, 0.12);
+
+  /* ── Sensor Colors ── */
+  --color-temp:  #f43f5e;
+  --color-hum:   #38bdf8;
+  --color-soil:  var(--green-500);
+  --color-motor: #6366f1;
+
+  /* ── Gradient Presets ── */
+  --gradient-primary:  linear-gradient(135deg, var(--green-500) 0%, var(--emerald-500) 100%);
+  --gradient-accent:   linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --gradient-warm:     linear-gradient(135deg, #f59e0b 0%, #f43f5e 100%);
+  --gradient-cool:     linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
+  --gradient-hero:     linear-gradient(135deg, #0f172a 0%, #1e3a2f 50%, #0f172a 100%);
+  --gradient-card-temp:  linear-gradient(135deg, rgba(244,63,94,0.15) 0%, rgba(244,63,94,0.05) 100%);
+  --gradient-card-hum:   linear-gradient(135deg, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0.05) 100%);
+  --gradient-card-soil:  linear-gradient(135deg, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.05) 100%);
+  --gradient-card-motor: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(99,102,241,0.05) 100%);
+
+  /* ── Surfaces (Light Mode) ── */
+  --bg-page:        #f8fafc;
+  --bg-card:        #ffffff;
+  --bg-card-hover:  #f1f5f9;
+  --bg-navbar:      rgba(255, 255, 255, 0.85);
+  --bg-input:       #f1f5f9;
+  --bg-overlay:     rgba(15, 23, 42, 0.6);
+  --bg-glass:       rgba(255, 255, 255, 0.7);
+  --bg-glass-dark:  rgba(15, 23, 42, 0.7);
+
+  /* ── Borders ── */
+  --border-color:       #e2e8f0;
+  --border-color-light: #f1f5f9;
+  --border-color-focus: var(--color-primary);
+  --border-radius-xs:   6px;
+  --border-radius-sm:   10px;
+  --border-radius-md:   14px;
+  --border-radius-card: 20px;
+  --border-radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --shadow-xs:     0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm:     0 2px 8px rgba(0,0,0,0.06);
+  --shadow-card:   0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+  --shadow-lg:     0 12px 40px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-xl:     0 24px 64px rgba(0,0,0,0.16);
+  --shadow-navbar: 0 1px 0 var(--border-color), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-green:  0 8px 24px rgba(34, 197, 94, 0.3);
+  --shadow-accent: 0 8px 24px rgba(99, 102, 241, 0.3);
+
+  /* ── Typography ── */
+  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  --text-primary:   #0f172a;
+  --text-secondary: #475569;
+  --text-muted:     #94a3b8;
+  --text-inverse:   #ffffff;
+  --text-on-green:  #ffffff;
+
+  --font-size-xs:   0.6875rem;  /* 11px */
+  --font-size-sm:   0.8125rem;  /* 13px */
+  --font-size-base: 0.9375rem;  /* 15px */
+  --font-size-lg:   1.0625rem;  /* 17px */
+  --font-size-xl:   1.1875rem;  /* 19px */
+  --font-size-2xl:  1.375rem;   /* 22px */
+  --font-size-3xl:  1.75rem;    /* 28px */
+  --font-size-4xl:  2.25rem;    /* 36px */
+  --font-size-5xl:  3rem;       /* 48px */
+
+  --font-weight-normal:   400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+  --font-weight-extrabold: 800;
+
+  --line-height-tight:  1.2;
+  --line-height-normal: 1.55;
+  --line-height-loose:  1.75;
+
+  /* ── Spacing ── */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* ── Layout ── */
+  --navbar-height:     68px;
+  --sidebar-width:     72px;   /* icon-only sidebar */
+  --content-max-width: 1440px;
+
+  /* ── Transitions ── */
+  --transition-fast:   120ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:   380ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── Z-Index ── */
+  --z-base:     0;
+  --z-card:     10;
+  --z-dropdown: 100;
+  --z-sidebar:  150;
+  --z-navbar:   200;
+  --z-modal:    300;
+  --z-toast:    400;
+}
+
+/* ============================================
+   Dark Mode
+   ============================================ */
+[data-theme="dark"] {
+  --bg-page:        #060b14;
+  --bg-card:        #0d1526;
+  --bg-card-hover:  #111d35;
+  --bg-navbar:      rgba(6, 11, 20, 0.9);
+  --bg-input:       #111d35;
+  --bg-glass:       rgba(13, 21, 38, 0.8);
+
+  --border-color:       rgba(255,255,255,0.08);
+  --border-color-light: rgba(255,255,255,0.04);
+
+  --shadow-card:   0 4px 24px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3);
+  --shadow-lg:     0 12px 40px rgba(0,0,0,0.6);
+  --shadow-navbar: 0 1px 0 rgba(255,255,255,0.06);
+
+  --text-primary:   #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted:     #475569;
+
+  --color-danger-light:  rgba(244, 63, 94, 0.15);
+  --color-warning-light: rgba(245, 158, 11, 0.15);
+  --color-success-light: rgba(34, 197, 94, 0.15);
+  --color-info-light:    rgba(56, 189, 248, 0.15);
+
+  --gradient-card-temp:  linear-gradient(135deg, rgba(244,63,94,0.2) 0%, rgba(244,63,94,0.05) 100%);
+  --gradient-card-hum:   linear-gradient(135deg, rgba(56,189,248,0.2) 0%, rgba(56,189,248,0.05) 100%);
+  --gradient-card-soil:  linear-gradient(135deg, rgba(34,197,94,0.2) 0%, rgba(34,197,94,0.05) 100%);
+  --gradient-card-motor: linear-gradient(135deg, rgba(99,102,241,0.2) 0%, rgba(99,102,241,0.05) 100%);
+}

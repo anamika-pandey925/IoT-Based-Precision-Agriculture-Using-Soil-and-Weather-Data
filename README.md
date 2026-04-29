@@ -1,70 +1,110 @@
-# Getting Started with Create React App
+# AgriSense — React Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Modern React conversion of the Precision Agriculture System.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Quick Start
 
-### `npm start`
+### 1. Install dependencies (already done if you ran the setup)
+```bash
+cd agri-dashboard
+npm install
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 2. Configure backend URL
+The `.env` file is already set to:
+```
+REACT_APP_API_URL=http://127.0.0.1:5000
+```
+Change this if your Flask backend runs on a different port.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 3. Start the React app
+```bash
+npm start
+```
+App runs at → **http://localhost:3000**
 
-### `npm test`
+### 4. Start your Flask backend (in a separate terminal)
+```bash
+python app.py
+# or
+flask run
+```
+Backend runs at → **http://127.0.0.1:5000**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Flask Backend Endpoints Required
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/sensor-data` | GET | Live sensor readings |
+| `/ask` | POST | AI chatbot |
+| `/predict` | POST | Plant disease scan |
+| `/motor/force_off` | POST | Emergency motor stop |
+| `/motor/manual` | POST | Manual motor control |
+| `/api/detect` | GET | Animal detection |
+| `/api/mandi` | GET | Market prices |
+| `/buzzer/trigger` | POST | Arduino buzzer |
+| `/export_csv` | GET | Download CSV |
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Project Structure
 
-### `npm run eject`
+```
+src/
+├── components/
+│   ├── common/       # Navbar, SensorCard, AlertToast, StatusBanner
+│   ├── charts/       # EnvironmentChart, SoilMoistureChart, AnalyticsCharts
+│   ├── motor/        # MotorCard, MotorRunTimer
+│   ├── alerts/       # AlertsPanel, AlertItem
+│   ├── ai/           # ChatWidget, ChatMessage, PlantScanner
+│   ├── weather/      # WeatherCard, ForecastGrid, IrrigationPlan
+│   ├── detection/    # DetectionStats, ZoneHeatmap, DetectionWidget
+│   └── market/       # MarketPriceCard, ProfitCalculator
+├── pages/            # DashboardPage, AnalyticsPage, AIAssistantPage, ...
+├── context/          # ThemeContext, SettingsContext, SensorContext, AlertContext
+├── hooks/            # useSensorData, useAlerts, useMotorControl, ...
+├── services/         # api.js, sensorService, motorService, aiService, ...
+├── styles/           # variables.css, globals.css, animations.css
+└── utils/            # alertEngine, formatters, csvExport
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **Live sensor dashboard** — temperature, humidity, soil moisture, motor status
+- **Real-time charts** — environment trends + soil moisture history (Recharts)
+- **Alert system** — toast notifications with cooldown, mute, and history
+- **AI assistant** — chat with EN/HI language toggle + voice input
+- **Plant scanner** — drag-drop image upload → disease diagnosis
+- **Weather page** — 7-day forecast + farming advice + crop suggestions
+- **Animal detection** — zone heatmap + pattern analysis
+- **Market prices** — live Mandi rates + profit calculator
+- **Overflow recovery** — status + recovery plan + drainage recommendations
+- **Settings** — all thresholds configurable, persisted to localStorage
+- **Dark mode** — toggle persists across sessions
+- **Responsive** — mobile-first, works from 320px to 2560px
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## Error States
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Condition | What you see |
+|-----------|-------------|
+| Flask not running | "Server not connected" on status banner + sensor cards |
+| Sensor disconnected | "Sensor not connected" on individual cards |
+| AI service down | Error message in chat bubble |
+| Market API down | Simulated prices shown automatically |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Build for Production
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+npm run build
+```
+Output in `build/` folder — ready to deploy to Netlify, Vercel, or any static host.

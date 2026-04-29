@@ -1,0 +1,121 @@
+.statusCard {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-card);
+  box-shadow: var(--shadow-card);
+  border: 2px solid var(--border-color);
+  padding: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.statusIcon { font-size: 2.5rem; flex-shrink: 0; }
+.statusInfo { flex: 1; }
+.statusLevel { font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--text-primary); }
+.statusMoisture { font-size: var(--font-size-sm); color: var(--text-muted); margin-top: 4px; }
+
+.statusBadge {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--border-radius-full);
+  color: #fff;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.section { margin-bottom: var(--space-8); }
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+.sectionTitle svg { color: var(--color-primary); }
+
+.stepsList { display: flex; flex-direction: column; gap: var(--space-3); }
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--bg-card);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+  border-left-width: 4px;
+  animation: fadeIn 0.3s ease-out both;
+}
+
+.stepItem.critical { border-left-color: var(--color-danger); }
+.stepItem.high     { border-left-color: var(--color-warning); }
+.stepItem.medium   { border-left-color: var(--color-info); }
+
+.stepNum {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+.stepAction { flex: 1; font-size: var(--font-size-sm); color: var(--text-primary); }
+
+.stepPriority {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: var(--border-radius-full);
+}
+.stepItem.critical .stepPriority { background: var(--color-danger-light);  color: var(--color-danger); }
+.stepItem.high     .stepPriority { background: var(--color-warning-light); color: #e65100; }
+.stepItem.medium   .stepPriority { background: var(--color-info-light);    color: #1565c0; }
+
+.drainageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+.drainageCard {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-color);
+  padding: var(--space-5);
+  animation: fadeIn 0.4s ease-out both;
+}
+
+.drainageMethod { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); margin-bottom: var(--space-2); }
+.drainageDesc   { font-size: var(--font-size-sm); color: var(--text-secondary); }
+
+.damageCard {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-color);
+  border-left-width: 4px;
+  padding: var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.damageIcon { font-size: 2rem; flex-shrink: 0; }
+.damageRisk { font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); color: var(--text-primary); margin-bottom: 4px; }
+.damageMsg  { font-size: var(--font-size-sm); color: var(--text-secondary); }

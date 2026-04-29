@@ -1,0 +1,93 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.lastUpdate { font-size: var(--font-size-xs); color: var(--text-muted); margin-bottom: var(--space-6); }
+
+.section { margin-bottom: var(--space-8); }
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+.sectionTitle svg { color: var(--color-primary); }
+
+.pricesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: var(--space-4);
+}
+
+.priceCard {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-color);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  animation: fadeIn 0.4s ease-out both;
+  transition: transform var(--transition-fast);
+}
+.priceCard:hover { transform: translateY(-3px); }
+
+.priceCrop  { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--text-primary); }
+.priceValue { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+.priceTrend { display: flex; align-items: center; gap: var(--space-1); font-size: var(--font-size-sm); }
+.trend_up   { color: var(--color-success); }
+.trend_down { color: var(--color-danger); }
+.trend_stable { color: var(--text-muted); }
+.priceAdvice { font-size: var(--font-size-xs); color: var(--text-secondary); }
+.priceMeta  { margin-top: auto; }
+
+.calcInput { display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-5); flex-wrap: wrap; }
+
+.profitGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+.profitCard {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-color);
+  padding: var(--space-5);
+  position: relative;
+  animation: fadeIn 0.4s ease-out both;
+  transition: transform var(--transition-fast);
+}
+.profitCard:hover { transform: translateY(-3px); }
+
+.profitRank {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profitCrop   { font-size: var(--font-size-base); font-weight: var(--font-weight-bold); color: var(--text-primary); margin-bottom: var(--space-2); }
+.profitAmount { font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); margin-bottom: 4px; }
+.profitRoi    { font-size: var(--font-size-sm); color: var(--color-primary); margin-bottom: var(--space-3); }
+.profitDetails { display: flex; flex-direction: column; gap: 4px; font-size: var(--font-size-xs); color: var(--text-muted); }

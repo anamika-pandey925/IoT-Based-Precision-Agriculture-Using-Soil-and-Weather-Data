@@ -1,0 +1,165 @@
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+/* ── Sidebar Nav ── */
+.sideNav {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-color);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--space-8));
+}
+
+.sideNavItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.sideNavItem:hover { background: var(--bg-input); color: var(--text-primary); }
+.sideNavItem.active {
+  background: var(--color-success-light);
+  color: var(--green-600);
+  font-weight: var(--font-weight-semibold);
+}
+
+[data-theme="dark"] .sideNavItem.active {
+  background: rgba(34,197,94,0.15);
+  color: var(--green-400);
+}
+
+/* ── Settings Card ── */
+.settingsCard {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.group {
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.group:last-child { border-bottom: none; }
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.groupIconBox {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.groupIconBox.green  { background: var(--color-success-light); color: var(--green-600); }
+.groupIconBox.blue   { background: var(--color-info-light);    color: #0284c7; }
+.groupIconBox.purple { background: rgba(99,102,241,0.12);      color: var(--color-accent); }
+.groupIconBox.orange { background: var(--color-warning-light); color: var(--color-warning-dark); }
+
+.groupTitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.groupDesc {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+/* ── Setting Row ── */
+.settingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border-color-light);
+}
+
+.settingRow:last-child { border-bottom: none; }
+
+.settingInfo { flex: 1; }
+
+.settingLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.settingDesc {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+  line-height: var(--line-height-normal);
+}
+
+.numInput {
+  width: 120px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+/* ── Actions ── */
+.actions {
+  padding: var(--space-6);
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  background: var(--bg-input);
+  border-top: 1px solid var(--border-color);
+}
+
+.savedMsg {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--green-600);
+  font-weight: var(--font-weight-semibold);
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .sideNav { position: static; flex-direction: row; flex-wrap: wrap; }
+}
+
+@media (max-width: 600px) {
+  .settingRow { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+  .numInput { width: 100%; text-align: left; }
+}
