@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Smart farming system with real-time monitoring, AI assistance, and automated irrigation control">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AgriSense">
+    <title>IoT Precision Agriculture | Real-Time Monitoring</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="motor_control.css">
+    <link rel="stylesheet" href="cloud_sync.css">
+    <link rel="stylesheet" href="analytics_reporting.css">
+    <link rel="icon" type="image/x-icon" href="images/soil.png">
+    <link rel="apple-touch-icon" href="images/soil.png">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- ===== TOAST ALERTS CONTAINER ===== -->
+    <div id="alerts-container" class="alerts-container" role="alert" aria-live="polite"></div>
+
+    <!-- ===== BACKGROUND SLIDESHOW ===== -->
+    <div id="bg-slideshow" aria-hidden="true"></div>
+    <div class="overlay" aria-hidden="true"></div>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" role="navigation" aria-label="Main Navigation">
+        <div class="nav-brand">
+            <i class="fa-solid fa-seedling"></i> AgriSense
+        </div>
+
+        <!-- Hamburger for mobile -->
+        <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <ul class="nav-links" id="navLinks" role="list">
+            <li><a href="#dashboardSection"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
+            <li><a href="#analyticsSection"><i class="fa-solid fa-chart-line"></i> Analytics</a></li>
+            <li><a href="#aiSection"><i class="fa-solid fa-robot"></i> AI Assistant</a></li>
+            <li><a href="#mapSection"><i class="fa-solid fa-map"></i> Map</a></li>
+            <li><a href="#forecastSection"><i class="fa-solid fa-cloud-sun"></i> Weather</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <button id="darkModeToggle" class="btn-icon" title="Toggle Dark/Light Mode" aria-label="Toggle dark mode">
+                <i class="fa-solid fa-sun"></i>
+            </button>
+            <div class="system-status" aria-live="polite">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="systemStatusText">System Online</span>
+                <span id="clockTime" aria-label="Current time">--:--:--</span>
+            </div>
+            <button id="scanBtn" class="btn-glass btn-sm-nav" title="AI Plant Scanner" aria-label="Open AI Scanner">
+                <i class="fa-solid fa-camera"></i>
+            </button>
+            <button id="settingsBtn" class="btn-glass btn-sm-nav" title="Settings" aria-label="Open Settings">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero-section" aria-label="Hero">
+        <div class="hero-badge">
+            <i class="fa-solid fa-microchip"></i> Smart Farming Technology
+        </div>
+        <h1 class="hero-title">
+            Smart Farming,<br>
+            <span class="hero-highlight">Powered by Data.</span>
+        </h1>
+        <p class="hero-subtitle">
+            Monitor soil, weather, and irrigation — then let automation do the work.
+        </p>
+        <div class="hero-buttons">
+            <a href="#dashboardSection" class="btn-hero-primary">
+                <i class="fa-solid fa-chart-line"></i> Open Dashboard
+            </a>
+            <a href="#aiSection" class="btn-hero-secondary">
+                <i class="fa-solid fa-robot"></i> AI Assistant
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== MAIN DASHBOARD ===== -->
+    <main class="main-container" id="dashboardSection">
+
+        <!-- Soil Status Banner -->
+        <div class="status-banner" id="statusBanner" role="status" aria-live="polite">
+            <i class="fa-solid fa-seedling" aria-hidden="true"></i>
+            <div class="status-banner-text">
+                <span class="status-label">Field Status</span>
+                <span id="soilStatusText">Analyzing...</span>
+            </div>
+            <div class="status-banner-right">
+                <span class="last-update-label">Last Update:</span>
+                <span id="lastUpdateTime">--:--:--</span>
+            </div>
+        </div>
+
+        <!-- ===== SENSOR CARDS GRID ===== -->
+        <section class="dashboard" aria-label="Sensor Data Cards">
+
+            <!-- Temperature Card -->
+            <div class="card" id="tempCard">
+                <div class="icon-wrapper temp" aria-hidden="true">
+                    <i class="fa-solid fa-temperature-three-quarters"></i>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Temperature</div>
+                    <h2 id="temp" aria-label="Temperature reading">-- °C</h2>
+                    <div class="card-sub" id="tempSub">Sensor not connected</div>
+                </div>
+            </div>
+
+            <!-- Humidity Card -->
+            <div class="card" id="humCard">
+                <div class="icon-wrapper hum" aria-hidden="true">
+                    <i class="fa-solid fa-droplet"></i>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Humidity</div>
+                    <h2 id="hum" aria-label="Humidity reading">-- %</h2>
+                    <div class="card-sub" id="humSub">Sensor not connected</div>
+                </div>
+            </div>
+
+            <!-- Soil Moisture Card -->
+            <div class="card" id="soilCard">
+                <div class="icon-wrapper soil" aria-hidden="true">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Soil Moisture</div>
+                    <h2 id="soil" aria-label="Soil moisture reading">-- %</h2>
+                    <div class="card-sub" id="soilSub">Sensor not connected</div>
+                </div>
+            </div>
+
+            <!-- Motor Status Card -->
+            <div class="card" id="motorCard">
+                <div class="icon-wrapper motor" aria-hidden="true">
+                    <i class="fa-solid fa-gears"></i>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">Motor Status</div>
+                    <h2 id="motor" aria-label="Motor status">--</h2>
+                    <div class="card-sub" id="motorSub">Motor not connected</div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ===== CHARTS SECTION ===== -->
+        <section class="charts-container" id="analyticsSection" aria-label="Data Charts">
+
+            <div class="chart-box">
+                <div class="chart-header">
+                    <h3><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Environmental Trends</h3>
+                    <span class="chart-badge" id="envChartBadge">Live</span>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="envChart" aria-label="Temperature and Humidity chart" role="img"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-box">
+                <div class="chart-header">
+                    <h3><i class="fa-solid fa-water" aria-hidden="true"></i> Soil Moisture History</h3>
+                    <span class="chart-badge" id="soilChartBadge">Live</span>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="soilChart" aria-label="Soil moisture history chart" role="img"></canvas>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ===== MIDDLE ROW: ALERTS + AI ASSISTANT ===== -->
+        <section class="middle-container" aria-label="Alerts and AI Assistant">
+
+            <!-- Alerts & Activity Log -->
+            <div class="extra-card logs-widget" id="alertsSection">
+                <div class="widget-header">
+                    <h3><i class="fa-solid fa-bell" aria-hidden="true"></i> Alerts &amp; Activity</h3>
+                    <a href="/export_csv" target="_blank" class="btn-sm" aria-label="Export data as CSV">
+                        <i class="fa-solid fa-download" aria-hidden="true"></i> Export CSV
+                    </a>
+                </div>
+                <ul class="log-list" id="logList" aria-label="Activity log" aria-live="polite">
+                    <li class="log-item">
+                        <span class="log-time">--:--</span>
+                        <span>System Initialized</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- AI Assistant (Embedded) -->
+            <div class="extra-card ai-widget" id="aiSection" aria-label="AI Agricultural Assistant">
+                <div class="chat-header">
+                    <h3><i class="fa-solid fa-robot" aria-hidden="true"></i> Agri-Assistant</h3>
+                    <div class="header-actions">
+                        <button id="langToggle" class="lang-btn" aria-label="Toggle language between English and Hindi">EN</button>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-label="Chat messages">
+                    <div class="message bot-msg">
+                        <i class="fa-solid fa-robot msg-icon" aria-hidden="true"></i>
+                        <span>Namaste! Hello! 🌱 I'm your AI Agri-Assistant.<br>Ask me about crops, irrigation, fertilizer, or farming tips!</span>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input
+                        type="text"
+                        id="chatInput"
+                        placeholder="Ask something... (e.g. which crop to grow?)"
+                        aria-label="Type your question"
+                        autocomplete="off"
+                    >
+                    <button class="chat-mic-btn" id="micBtn" aria-label="Voice input" title="Voice Input">
+                        <i class="fa-solid fa-microphone" aria-hidden="true"></i>
+                    </button>
+                    <button class="chat-send-btn" id="sendBtn" aria-label="Send message" title="Send">
+                        <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ===== EXTRAS ROW: Weather, AQI, Crops, ML ===== -->
+        <section class="extras-container" aria-label="Weather, Crops, and ML Predictions">
+
+            <!-- Weather Forecast -->
+            <div class="extra-card weather-widget" id="forecastSection">
+                <h3><i class="fa-solid fa-cloud-sun" aria-hidden="true"></i> 3-Day Forecast</h3>
+                <div class="forecast-container" id="forecastContainer" aria-live="polite">
+                    <div class="loading-state">
+                        <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Loading weather...
+                    </div>
+                </div>
+            </div>
+
+            <!-- AQI Widget -->
+            <div class="extra-card aqi-widget">
+                <h3><i class="fa-solid fa-wind" aria-hidden="true"></i> Live Air Quality</h3>
+                <div class="aqi-content" id="aqiContainer" aria-live="polite">
+                    <div class="aqi-circle" id="aqiCircle" aria-label="AQI value">
+                        <span id="aqiValue">--</span>
+                        <span class="aqi-label">AQI</span>
+                    </div>
+                    <div class="aqi-details">
+                        <div id="aqiStatus" class="aqi-status">--</div>
+                        <div class="pm-level">PM2.5: <span id="pm25Value">--</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Smart Crop Advisor -->
+            <div class="extra-card crop-widget">
+                <h3><i class="fa-solid fa-wheat-awn" aria-hidden="true"></i> Smart Crop Advisor</h3>
+                <div id="cropContainer" aria-live="polite">
+                    <div class="season-badge" id="seasonBadge">--</div>
+                    <ul class="crop-list" id="cropList" aria-label="Crop recommendations">
+                        <li class="loading-state">
+                            <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Analyzing...
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ML Prediction Widget -->
+            <div class="extra-card ml-widget">
+                <h3><i class="fa-solid fa-microchip" aria-hidden="true"></i> ML Irrigation Model</h3>
+                <div class="ml-status-box" aria-live="polite">
+                    <div class="ml-icon-ring" id="mlIconRing">
+                        <i class="fa-solid fa-brain" aria-hidden="true"></i>
+                    </div>
+                    <div id="mlStatus" class="ml-status-text">Waiting for sensor data...</div>
+                    <div class="ml-confidence">
+                        Model Confidence: <span class="highlight" id="mlConfidence">95%</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ===== ADVANCED ROW: Map + Mandi Rates ===== -->
+        <section class="advanced-container" id="mapSection" aria-label="Farm Map and Market Prices">
+
+            <div class="extra-card map-widget">
+                <h3><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Farm Location &amp; Insights</h3>
+                <div id="farmMap" class="map-wrapper" aria-label="Interactive farm map" role="application"></div>
+            </div>
+
+            <div class="extra-card mandi-widget">
+                <h3><i class="fa-solid fa-indian-rupee-sign" aria-hidden="true"></i> Live Mandi Rates</h3>
+                <div class="mandi-content" id="mandiContainer" aria-live="polite">
+                    <div class="loading-state">
+                        <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Fetching market prices...
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ===== STEP 6: ENHANCED ANIMAL DETECTION SECTION ===== -->
+    <section class="detection-section" style="max-width: 1400px; margin: 40px auto; padding: 0 20px;">
+        
+        <div class="detection-widget">
+            <h3><i class="fa-solid fa-paw"></i> Enhanced Animal & Bird Detection System</h3>
+            
+            <!-- Detection Statistics -->
+            <div class="detection-stats-grid">
+                <div class="detection-stat-card">
+                    <div class="detection-stat-label">Total Detections</div>
+                    <div class="detection-stat-value" id="totalDetections">0</div>
+                </div>
+                <div class="detection-stat-card">
+                    <div class="detection-stat-label">Last 24 Hours</div>
+                    <div class="detection-stat-value" id="detections24h">0</div>
+                </div>
+                <div class="detection-stat-card">
+                    <div class="detection-stat-label">Last Week</div>
+                    <div class="detection-stat-value" id="detectionsWeek">0</div>
+                </div>
+                <div class="detection-stat-card">
+                    <div class="detection-stat-label">Most Active Zone</div>
+                    <div class="detection-stat-value" id="mostActiveZone">--</div>
+                </div>
+            </div>
+
+            <!-- Detection Heatmap -->
+            <div style="margin-top: 25px;">
+                <h4 style="margin-bottom: 15px; color: #333;">
+                    <i class="fa-solid fa-fire"></i> Detection Heatmap by Zone
+                </h4>
+                <div id="detectionHeatmap">
+                    <div class="heatmap-grid">
+                        <div class="heatmap-zone" style="background-color: #e9ecef">
+                            <div class="heatmap-zone-name">North Field</div>
+                            <div class="heatmap-zone-count">0 detections</div>
+                            <div class="heatmap-zone-intensity">None</div>
+                        </div>
+                        <div class="heatmap-zone" style="background-color: #e9ecef">
+                            <div class="heatmap-zone-name">South Field</div>
+                            <div class="heatmap-zone-count">0 detections</div>
+                            <div class="heatmap-zone-intensity">None</div>
+                        </div>
+                        <div class="heatmap-zone" style="background-color: #e9ecef">
+                            <div class="heatmap-zone-name">East Field</div>
+                            <div class="heatmap-zone-count">0 detections</div>
+                            <div class="heatmap-zone-intensity">None</div>
+                        </div>
+                        <div class="heatmap-zone" style="background-color: #e9ecef">
+                            <div class="heatmap-zone-name">West Field</div>
+                            <div class="heatmap-zone-count">0 detections</div>
+                            <div class="heatmap-zone-intensity">None</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pattern Analysis -->
+            <div class="pattern-analysis">
+                <h4><i class="fa-solid fa-chart-bar"></i> Detection Patterns</h4>
+                <div style="margin-bottom: 20px;">
+                    <strong style="font-size: 13px; color: #666;">Time of Day Distribution</strong>
+                    <div class="pattern-chart" id="timeOfDayPattern">
+                        <div class="pattern-bar">
+                            <div class="pattern-bar-fill" style="width: 0%">0</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <strong style="font-size: 13px; color: #666;">Most Common Threat</strong>
+                    <div style="margin-top: 10px; font-size: 18px; font-weight: bold; color: #333;" id="mostCommonThreat">
+                        No data yet
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap;">
+                <button class="btn-primary" onclick="window.animalDetection.exportHistory()">
+                    <i class="fa-solid fa-download"></i> Export Detection History
+                </button>
+                <button class="btn-secondary" onclick="viewAllZones()">
+                    <i class="fa-solid fa-map"></i> View All Zones
+                </button>
+                <button class="btn-secondary" onclick="refreshDetectionStats()">
+                    <i class="fa-solid fa-sync"></i> Refresh Statistics
+                </button>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ===== STEP 7: WEATHER + FARMING SUGGESTION SECTION ===== -->
+    <section class="weather-farming-section">
+        
+        <!-- Current Weather -->
+        <div class="weather-farming-widget">
+            <h3><i class="fa-solid fa-cloud-sun"></i> Current Weather Conditions</h3>
+            <div class="current-weather-card">
+                <div class="current-weather-header">
+                    <div>
+                        <div class="current-weather-temp" id="currentTemp">--°C</div>
+                        <div class="current-weather-condition" id="currentCondition">Loading...</div>
+                    </div>
+                    <i class="fa-solid fa-cloud current-weather-icon" id="currentWeatherIcon"></i>
+                </div>
+                <div class="current-weather-details">
+                    <div class="weather-detail-item">
+                        <div class="weather-detail-label">Humidity</div>
+                        <div class="weather-detail-value" id="currentHumidity">--%</div>
+                    </div>
+                    <div class="weather-detail-item">
+                        <div class="weather-detail-label">Precipitation</div>
+                        <div class="weather-detail-value" id="currentPrecip">--mm</div>
+                    </div>
+                    <div class="weather-detail-item">
+                        <div class="weather-detail-label">Wind Speed</div>
+                        <div class="weather-detail-value" id="currentWind">-- km/h</div>
+                    </div>
+                </div>
+            </div>
+            <div class="weather-last-update" id="weatherLastUpdate">Last updated: --</div>
+        </div>
+
+        <!-- 5-Day Forecast -->
+        <div class="weather-farming-widget">
+            <h3><i class="fa-solid fa-calendar-days"></i> 5-Day Weather Forecast</h3>
+            <div class="forecast-grid" id="forecastContainer">
+                <div class="forecast-day">
+                    <div class="forecast-day-label">Loading...</div>
+                    <i class="fa-solid fa-spinner fa-spin forecast-icon"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather-Based Farming Advice -->
+        <div class="weather-farming-widget">
+            <h3><i class="fa-solid fa-lightbulb"></i> Weather-Based Farming Advice</h3>
+            <div class="advice-grid" id="farmingAdviceContainer">
+                <div class="advice-card">
+                    <div class="advice-header">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <span class="advice-category">Loading...</span>
+                    </div>
+                    <div class="advice-text">Analyzing weather conditions...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crop Suggestions -->
+        <div class="weather-farming-widget">
+            <h3><i class="fa-solid fa-wheat-awn"></i> Recommended Crops for Current Weather</h3>
+            <div class="crop-grid" id="cropSuggestionsContainer">
+                <div class="crop-suggestion-card">
+                    <div class="crop-header">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <span class="crop-name">Loading...</span>
+                    </div>
+                    <div class="crop-advice">Analyzing weather patterns...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Irrigation Plan -->
+        <div class="weather-farming-widget">
+            <h3><i class="fa-solid fa-droplet"></i> Weather-Based Irrigation Plan</h3>
+            <div id="irrigationPlanContainer">
+                <div class="irrigation-need irrigation-need-moderate">
+                    <div class="need-label">Irrigation Need</div>
+                    <div class="need-value">LOADING...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="weather-actions">
+            <button class="btn-weather btn-weather-primary" onclick="window.refreshWeather()">
+                <i class="fa-solid fa-sync"></i> Refresh Weather Data
+            </button>
+            <button class="btn-weather btn-weather-secondary" onclick="window.exportWeatherHistory()">
+                <i class="fa-solid fa-download"></i> Export Weather History
+            </button>
+        </div>
+
+    </section>
+
+    <!-- ===== STEP 7: WEATHER + FARMING SUGGESTION SECTION ===== -->
+    <section class="weather-farming-section">
+        
+        <!-- Current Weather & 7-Day Forecast -->
+        <div class="weather-farming-widget">
+            <h3><i class="fa-solid fa-cloud-sun"></i> Weather Forecast & Climate Analysis</h3>
+            
+            <!-- Current Weather -->
+            <div id="currentWeatherDisplay" style="margin-bottom: 30px;">
+                <div class="current-weather-card">
+                    <div class="weather-icon-large">
+                        <i class="fa-solid fa-cloud-sun"></i>
+                    </div>
+                    <div class="weather-details">
+                        <div class="weather-temp">--°C</div>
+                        <div class="weather-condition">Loading...</div>
+                        <div class="weather-meta">
+                            <span><i class="fa-solid fa-droplet"></i> --%</span>
+                            <span><i class="fa-solid fa-wind"></i> -- km/h</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 7-Day Forecast -->
+            <div>
+                <h4 style="margin-bottom: 15px; color: #333;">
+                    <i class="fa-solid fa-calendar-week"></i> 7-Day Forecast
+                </h4>
+                <div id="forecast7Days" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px;">
+                    <!-- Forecast cards will be inserted here -->
+                </div>
+            </div>
+            
+            <div class="weather-last-update" id="weatherLastUpdate">Last updated: --</div>
+            
+            <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+                <button class="btn-primary" onclick="window.refreshWeather()">
+                    <i class="fa-solid fa-sync"></i> Refresh Weather
+                </button>
+            </div>
+        </div>
+
+        <!-- Crop Suggestions -->
+        <div class="weather-farming-widget">
+            <h3><i class="fa-solid fa-wheat-awn"></i> Smart Crop Suggestions (Weather-Based)</h3>
+            <p style="color: #666; margin-bottom: 20px;">
+                Based on current weather conditions, forecast, and seasonal patterns
+            </p>
+            <div id="cropSuggestionsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <!-- Crop suggestion cards will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Farming Advice -->
+        <div class="weather-farming-widget">
+            <h3><i class="fa-solid fa-lightbulb"></i> Weather-Based Farming Advice</h3>
+            <p style="color: #666; margin-bottom: 20px;">
+                Actionable recommendations based on upcoming weather conditions
+            </p>
+            <div id="farmingAdviceContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                <!-- Farming advice cards will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Irrigation Plan -->
+        <div class="weather-farming-widget">
+            <h3><i class="fa-solid fa-droplet"></i> Smart Irrigation Plan (7-Day)</h3>
+            <p style="color: #666; margin-bottom: 20px;">
+                Optimize water usage based on weather forecast and crop needs
+            </p>
+            <div id="irrigationPlanContainer">
+                <!-- Irrigation plan will be inserted here -->
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ===== STEP 8: PROFIT & MARKET SYSTEM SECTION ===== -->
+    <section class="profit-market-section">
+        
+        <!-- Market Prices -->
+        <div class="profit-market-widget">
+            <h3><i class="fa-solid fa-indian-rupee-sign"></i> Live Market Prices (Mandi Rates)</h3>
+            <p style="color: #666; margin-bottom: 20px;">
+                Real-time crop prices with trend analysis and selling recommendations
+            </p>
+            <div id="marketPricesContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                <!-- Market price cards will be inserted here -->
+            </div>
+            <div class="market-last-update" id="marketLastUpdate">Last updated: --</div>
+            
+            <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+                <button class="btn-primary" onclick="window.refreshMarketData()">
+                    <i class="fa-solid fa-sync"></i> Refresh Market Data
+                </button>
+            </div>
+        </div>
+
+        <!-- Profit Calculations -->
+        <div class="profit-market-widget">
+            <h3><i class="fa-solid fa-coins"></i> Profit Calculator (Top 5 High-Profit Crops)</h3>
+            <p style="color: #666; margin-bottom: 20px;">
+                Detailed profit analysis based on current market prices and cultivation costs
+            </p>
+            
+            <!-- Investment Settings -->
+            <div class="investment-settings">
+                <h4><i class="fa-solid fa-sliders"></i> Investment Parameters</h4>
+                <div class="investment-grid">
+                    <div class="investment-input-group">
+                        <label>Land Size (acres)</label>
+                        <input type="number" id="landSizeInput" value="1" min="0.1" step="0.1">
+                    </div>
+                    <div class="investment-input-group">
+                        <label>Labor Cost (₹/acre)</label>
+                        <input type="number" id="laborCostInput" value="5000" min="0" step="500">
+                    </div>
+                    <div class="investment-input-group">
+                        <label>Fertilizer Cost (₹/acre)</label>
+                        <input type="number" id="fertilizerCostInput" value="3000" min="0" step="500">
+                    </div>
+                    <div class="investment-input-group">
+                        <label>Irrigation Cost (₹/acre)</label>
+                        <input type="number" id="irrigationCostInput" value="2000" min="0" step="500">
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="updateInvestmentFromUI()" style="margin-top: 15px;">
+                    <i class="fa-solid fa-calculator"></i> Recalculate Profits
+                </button>
+            </div>
+            
+            <div id="profitCalculationsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+                <!-- Profit calculation cards will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Price Alerts -->
+        <div class="profit-market-widget">
+            <h3><i class="fa-solid fa-bell"></i> Price Alerts & Market Opportunities</h3>
+            <p style="color: #666; margin-bottom: 20px;">
+                Important market alerts and best time to sell recommendations
+            </p>
+            <div id="priceAlertsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                <!-- Price alert cards will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Market Trends -->
+        <div class="profit-market-widget">
+            <h3><i class="fa-solid fa-chart-line"></i> Market Trends Analysis</h3>
+            <p style="color: #666; margin-bottom: 20px;">
+                Historical price trends and volatility analysis for informed decisions
+            </p>
+            <div id="marketTrendsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                <!-- Market trend cards will be inserted here -->
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ===== STEP 9: WATER OVERFLOW RECOVERY SECTION ===== -->
+    <section class="overflow-recovery-section">
+        
+        <!-- Overflow Status -->
+        <div class="overflow-recovery-widget">
+            <h3><i class="fa-solid fa-water"></i> Water Overflow Detection & Recovery</h3>
+            <p style="color: #666; margin-bottom: 20px;">
+                Real-time overflow monitoring with automated recovery plan and drainage recommendations
+            </p>
+            <div id="overflowStatusContainer">
+                <!-- Overflow status card will be inserted here -->
+                <div class="overflow-status-card status-none">
+                    <div class="overflow-status-header">
+                        <div class="overflow-icon" style="color: #37b24d">
+                            <i class="fa-solid fa-check-circle"></i>
+                        </div>
+                        <div class="overflow-status-info">
+                            <div class="overflow-level-label">Overflow Level: <strong>NONE</strong></div>
+                            <div class="overflow-water-level">Water Level: 0%</div>
+                        </div>
+                    </div>
+                    <div class="overflow-status-details">
+                        <div class="status-detail">
+                            <span class="detail-label">Soil Moisture:</span>
+                            <span class="detail-value">0%</span>
+                        </div>
+                        <div class="status-detail">
+                            <span class="detail-label">Action Required:</span>
+                            <span class="detail-value">normal</span>
+                        </div>
+                        <div class="status-detail">
+                            <span class="detail-label">Crop Damage Risk:</span>
+                            <span class="detail-value risk-none">none</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recovery Plan -->
+        <div class="overflow-recovery-widget">
+            <h3><i class="fa-solid fa-list-check"></i> Recovery Action Plan</h3>
+            <p style="color: #666; margin-bottom: 20px;">
+                Step-by-step recovery plan with priority actions and estimated completion time
+            </p>
+            <div id="recoveryPlanContainer">
+                <div style="text-align: center; padding: 40px; color: #888;">
+                    <i class="fa-solid fa-info-circle" style="font-size: 48px; margin-bottom: 15px;"></i>
+                    <p>No overflow detected. Recovery plan will appear when overflow is detected.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drainage Recommendations -->
+        <div class="overflow-recovery-widget">
+            <h3><i class="fa-solid fa-arrows-down-to-line"></i> Drainage Recommendations</h3>
+            <p style="color: #666; margin-bottom: 20px;">
+                Effective drainage methods to remove excess water and prevent future overflow
+            </p>
+            <div id="drainageRecommendationsContainer" class="overflow-grid">
+                <div style="text-align: center; padding: 40px; color: #888; grid-column: 1 / -1;">
+                    <i class="fa-solid fa-info-circle" style="font-size: 48px; margin-bottom: 15px;"></i>
+                    <p>Drainage recommendations will appear when overflow is detected.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crop Damage Assessment -->
+        <div class="overflow-recovery-widget">
+            <h3><i class="fa-solid fa-triangle-exclamation"></i> Crop Damage Risk Assessment</h3>
+            <p style="color: #666; margin-bottom: 20px;">
+                Real-time assessment of crop damage risk based on waterlogging duration
+            </p>
+            <div id="cropDamageContainer">
+                <div class="crop-damage-card" style="border-left-color: #37b24d">
+                    <div class="damage-icon" style="color: #37b24d">
+                        <i class="fa-solid fa-check-circle"></i>
+                    </div>
+                    <div class="damage-content">
+                        <div class="damage-risk">Risk Level: <strong style="color: #37b24d">NONE</strong></div>
+                        <div class="damage-message">No significant crop damage expected</div>
+                        <div class="damage-duration">Waterlogging Duration: 0 hours</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="overflow-actions">
+            <button class="btn-overflow btn-overflow-primary" onclick="window.overflowRecovery.checkStatus()">
+                <i class="fa-solid fa-sync"></i> Check Overflow Status
+            </button>
+            <button class="btn-overflow btn-overflow-secondary" onclick="window.exportOverflowHistory()">
+                <i class="fa-solid fa-download"></i> Export Overflow History
+            </button>
+            <button class="btn-overflow btn-overflow-danger" onclick="window.testOverflowEmergency()">
+                <i class="fa-solid fa-triangle-exclamation"></i> Test Emergency Mode
+            </button>
+        </div>
+
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+        <p>
+            <i class="fa-solid fa-seedling" aria-hidden="true"></i>
+            Designed by <strong>Anamika Pandey</strong> &mdash; IoT Precision Agriculture System &copy; 2026
+        </p>
+    </footer>
+
+    <!-- ===== SETTINGS MODAL ===== -->
+    <div id="settingsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="modal-content">
+            <button class="modal-close" id="settingsClose" aria-label="Close settings">&times;</button>
+            <h2 id="settingsTitle"><i class="fa-solid fa-sliders" aria-hidden="true"></i> System Settings</h2>
+
+            <div class="setting-item">
+                <label for="thresholdInput">Moisture Threshold for Motor (%)</label>
+                <input type="number" id="thresholdInput" value="40" min="0" max="100">
+            </div>
+            <div class="setting-item">
+                <label for="tempThresholdInput">Temperature Alert Threshold (°C)</label>
+                <input type="number" id="tempThresholdInput" value="35" min="0" max="60">
+            </div>
+            <div class="setting-item">
+                <label for="refreshRateInput">Data Refresh Rate</label>
+                <select id="refreshRateInput" class="setting-select">
+                    <option value="2000">2 Seconds (Real-time)</option>
+                    <option value="5000">5 Seconds</option>
+                    <option value="10000">10 Seconds</option>
+                    <option value="60000">1 Minute</option>
+                </select>
+            </div>
+            <div class="setting-item setting-item-row">
+                <label for="autoModeTime">Auto-Irrigation Mode</label>
+                <label class="switch">
+                    <input type="checkbox" id="autoModeTime" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="setting-item setting-item-row">
+                <label for="voiceAlertToggle">Voice Alerts</label>
+                <label class="switch">
+                    <input type="checkbox" id="voiceAlertToggle" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <button class="btn-primary" id="saveSettings">
+                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Save Configuration
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== AI SCANNER MODAL ===== -->
+    <div id="scanModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="scanTitle">
+        <div class="modal-content scan-modal">
+            <button class="modal-close scan-close" aria-label="Close scanner">&times;</button>
+            <h2 id="scanTitle">
+                <i class="fa-solid fa-plant-wilt" aria-hidden="true"></i> Plant Disease Scanner
+            </h2>
+
+            <div class="scan-area" id="dropZone" role="button" tabindex="0" aria-label="Click or drag image to scan">
+                <i class="fa-solid fa-cloud-arrow-up scan-icon" aria-hidden="true"></i>
+                <p>Click or Drag &amp; Drop Image Here</p>
+                <small>Supports JPG, PNG, WEBP</small>
+                <input type="file" id="imageInput" accept="image/*" style="display:none;" aria-label="Upload image file">
+            </div>
+
+            <img id="scanPreview" src="" alt="Uploaded plant or soil image preview" class="scan-preview">
+
+            <div id="scanResult" class="scan-result" aria-live="polite">
+                <div class="result-header" id="diseaseName">--</div>
+                <div class="confidence-meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div class="confidence-fill" id="confidenceBar"></div>
+                </div>
+                <div id="scanDetails" class="scan-details">
+                    <p id="diseaseDesc" class="disease-desc">--</p>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <small>Type</small>
+                            <div id="resType" class="bold-text">--</div>
+                        </div>
+                        <div class="detail-item">
+                            <small>Health</small>
+                            <div id="resHealth" class="bold-text">--</div>
+                        </div>
+                    </div>
+                    <div class="suggestions-box">
+                        <h4><i class="fa-solid fa-list-check" aria-hidden="true"></i> Suggestions</h4>
+                        <ul id="resSuggestions" class="suggestions-list"></ul>
+                    </div>
+                    <div class="weather-advice-box">
+                        <h4><i class="fa-solid fa-cloud-sun" aria-hidden="true"></i> Weather &amp; Farm Advice</h4>
+                        <p id="resWeather">--</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 3: Sensor Integration -->
+    <script src="sensor_integration.js"></script>
+    <!-- STEP 4: Motor Control -->
+    <script src="motor_control.js"></script>
+    <!-- STEP 5: Alert System -->
+    <script src="alert_system.js"></script>
+    <!-- STEP 6: Enhanced Animal Detection -->
+    <script src="animal_detection.js"></script>
+    <!-- STEP 7: Weather + Farming Suggestion -->
+    <script src="weather_farming.js"></script>
+    <!-- STEP 8: Profit & Market System -->
+    <script src="profit_market.js"></script>
+    <!-- STEP 9: Water Overflow Recovery -->
+    <script src="overflow_recovery.js"></script>
+    <!-- STEP 11: Mobile App Integration -->
+    <script src="mobile-app.js"></script>
+    <!-- STEP 12: Cloud Sync & Backup -->
+    <script src="cloud_sync.js"></script>
+    <!-- STEP 13: Advanced Analytics & Reporting -->
+    <script src="analytics_reporting.js"></script>
+    <script>
+        // Helper function to update investment from UI
+        function updateInvestmentFromUI() {
+            const data = {
+                landSize: parseFloat(document.getElementById('landSizeInput').value) || 1,
+                laborCost: parseFloat(document.getElementById('laborCostInput').value) || 5000,
+                fertilizerCost: parseFloat(document.getElementById('fertilizerCostInput').value) || 3000,
+                irrigationCost: parseFloat(document.getElementById('irrigationCostInput').value) || 2000
+            };
+            window.updateInvestmentData(data);
+        }
+        
+        // Helper function to export overflow history
+        function exportOverflowHistory() {
+            const state = window.overflowRecovery.getState();
+            const history = state.overflowHistory;
+            
+            if (history.length === 0) {
+                alert('No overflow history to export');
+                return;
+            }
+            
+            // Create CSV content
+            let csv = 'Timestamp,Level,Water Level (%),Soil Moisture (%)\n';
+            history.forEach(record => {
+                const date = new Date(record.timestamp).toLocaleString();
+                csv += `${date},${record.level},${record.waterLevel},${record.soilMoisture}\n`;
+            });
+            
+            // Download CSV
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `overflow_history_${Date.now()}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            if (window.showAlert) {
+                window.showAlert('Overflow history exported successfully', 'success');
+            }
+        }
+        
+        // Helper function to test emergency mode
+        function testOverflowEmergency() {
+            if (confirm('This will simulate a critical overflow emergency. Continue?')) {
+                // Temporarily override water level for testing
+                const originalCheck = window.overflowRecovery.checkStatus;
+                
+                // Simulate critical overflow
+                if (window.showAlert) {
+                    window.showAlert('TESTING: Simulating critical overflow emergency', 'warning');
+                }
+                
+                console.log('🧪 TEST MODE: Simulating critical overflow');
+                console.log('In production, this would trigger:');
+                console.log('- Emergency mode activation');
+                console.log('- Motor force off');
+                console.log('- Buzzer alerts');
+                console.log('- Voice warnings');
+                console.log('- Recovery plan generation');
+                
+                alert('Test mode: Check console for simulated emergency response details');
+            }
+        }
+    </script>
+    <script src="script.js?v=10"></script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+{
+  "name": "AgriSense - IoT Precision Agriculture",
+  "short_name": "AgriSense",
+  "description": "Smart farming system with real-time monitoring, AI assistance, and automated irrigation control",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "images/soil.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/soil.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["agriculture", "productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "images/temp.png",
+      "sizes": "540x720",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View sensor dashboard",
+      "url": "/#dashboardSection",
+      "icons": [
+        {
+          "src": "images/soil.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "AI Assistant",
+      "short_name": "AI Chat",
+      "description": "Chat with AI farming assistant",
+      "url": "/#aiSection",
+      "icons": [
+        {
+          "src": "images/soil.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Motor Control",
+      "short_name": "Motor",
+      "description": "Control irrigation motor",
+      "url": "/#motorCard",
+      "icons": [
+        {
+          "src": "images/motor.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

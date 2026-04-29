@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert System Testing - STEP 5</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+        .test-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .test-btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+        }
+        .btn-warning {
+            background: linear-gradient(135deg, #ffd43b 0%, #fab005 100%);
+            color: #333;
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #51cf66 0%, #37b24d 100%);
+            color: white;
+        }
+        .btn-info {
+            background: linear-gradient(135deg, #74c0fc 0%, #339af0 100%);
+            color: white;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .status-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        .status-label {
+            font-weight: 600;
+            color: #666;
+        }
+        .status-value {
+            color: #333;
+        }
+        .log-output {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        .log-entry {
+            margin-bottom: 5px;
+        }
+        .log-time {
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <!-- Alerts Container -->
+    <div id="alerts-container" class="alerts-container"></div>
+
+    <div class="test-container">
+        <h1><i class="fa-solid fa-flask"></i> Alert System Testing Dashboard</h1>
+        <p class="subtitle">STEP 5: Comprehensive Alert System - Test all features</p>
+
+        <!-- Test Alert Types -->
+        <div class="test-section">
+            <h2><i class="fa-solid fa-bell"></i> Test Alert Types</h2>
+            <div class="button-grid">
+                <button class="test-btn btn-warning" onclick="testDrySoil()">
+                    <i class="fa-solid fa-droplet"></i> Dry Soil Alert
+                </button>
+                <button class="test-btn btn-danger" onclick="testWaterOverflow()">
+                    <i class="fa-solid fa-water"></i> Water Overflow
+                </button>
+                <button class="test-btn btn-danger" onclick="testHighTemp()">
+                    <i class="fa-solid fa-temperature-high"></i> High Temperature
+                </button>
+                <button class="test-btn btn-warning" onclick="testAnimalDetection()">
+                    <i class="fa-solid fa-paw"></i> Animal Detected
+                </button>
+                <button class="test-btn btn-danger" onclick="testSensorDisconnect()">
+                    <i class="fa-solid fa-plug-circle-xmark"></i> Sensor Disconnected
+                </button>
+                <button class="test-btn btn-warning" onclick="testMotorAutoOff()">
+                    <i class="fa-solid fa-power-off"></i> Motor Auto-Off
+                </button>
+            </div>
+        </div>
+
+        <!-- Test Alert Features -->
+        <div class="test-section">
+            <h2><i class="fa-solid fa-sliders"></i> Test Alert Features</h2>
+            <div class="button-grid">
+                <button class="test-btn btn-info" onclick="testCooldown()">
+                    <i class="fa-solid fa-clock"></i> Test Cooldown
+                </button>
+                <button class="test-btn btn-info" onclick="testMute()">
+                    <i class="fa-solid fa-bell-slash"></i> Test Mute
+                </button>
+                <button class="test-btn btn-success" onclick="testVoiceAlert()">
+                    <i class="fa-solid fa-volume-high"></i> Test Voice Alert
+                </button>
+                <button class="test-btn btn-primary" onclick="testBuzzer()">
+                    <i class="fa-solid fa-bell"></i> Test Buzzer
+                </button>
+            </div>
+        </div>
+
+        <!-- Test Management -->
+        <div class="test-section">
+            <h2><i class="fa-solid fa-chart-line"></i> Alert Management</h2>
+            <div class="button-grid">
+                <button class="test-btn btn-info" onclick="showStatistics()">
+                    <i class="fa-solid fa-chart-bar"></i> Show Statistics
+                </button>
+                <button class="test-btn btn-success" onclick="exportHistory()">
+                    <i class="fa-solid fa-download"></i> Export History
+                </button>
+                <button class="test-btn btn-warning" onclick="clearHistory()">
+                    <i class="fa-solid fa-trash"></i> Clear History
+                </button>
+                <button class="test-btn btn-primary" onclick="showState()">
+                    <i class="fa-solid fa-info-circle"></i> Show State
+                </button>
+            </div>
+        </div>
+
+        <!-- Animal Detection Control -->
+        <div class="test-section">
+            <h2><i class="fa-solid fa-paw"></i> Animal Detection Control</h2>
+            <div class="button-grid">
+                <button class="test-btn btn-success" onclick="startDetection()">
+                    <i class="fa-solid fa-play"></i> Start Detection
+                </button>
+                <button class="test-btn btn-danger" onclick="stopDetection()">
+                    <i class="fa-solid fa-stop"></i> Stop Detection
+                </button>
+                <button class="test-btn btn-info" onclick="checkDetection()">
+                    <i class="fa-solid fa-search"></i> Check Detection
+                </button>
+            </div>
+        </div>
+
+        <!-- Status Display -->
+        <div class="test-section">
+            <h2><i class="fa-solid fa-info-circle"></i> System Status</h2>
+            <div class="status-box">
+                <div class="status-item">
+                    <span class="status-label">Voice Alerts:</span>
+                    <span class="status-value" id="voiceStatus">--</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Buzzer Alerts:</span>
+                    <span class="status-value" id="buzzerStatus">--</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Animal Detection:</span>
+                    <span class="status-value" id="animalStatus">--</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Active Alerts:</span>
+                    <span class="status-value" id="activeAlerts">--</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Total History:</span>
+                    <span class="status-value" id="totalHistory">--</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Console Log -->
+        <div class="test-section">
+            <h2><i class="fa-solid fa-terminal"></i> Console Log</h2>
+            <div class="log-output" id="logOutput">
+                <div class="log-entry"><span class="log-time">[00:00:00]</span> Test dashboard initialized</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Alert System -->
+    <script src="alert_system.js"></script>
+
+    <script>
+        // Test Functions
+        function testDrySoil() {
+            log('Testing DRY_SOIL alert...');
+            window.alertSystem.trigger('DRY_SOIL', 'Test: Soil moisture critically low! (25%)', {
+                moisture: 25,
+                threshold: 40
+            });
+            updateStatus();
+        }
+
+        function testWaterOverflow() {
+            log('Testing WATER_OVERFLOW alert...');
+            window.alertSystem.trigger('WATER_OVERFLOW', 'Test: Water overflow detected! Motor stopped.', {
+                moisture: 95
+            });
+            updateStatus();
+        }
+
+        function testHighTemp() {
+            log('Testing HIGH_TEMPERATURE alert...');
+            window.alertSystem.trigger('HIGH_TEMPERATURE', 'Test: Temperature exceeds safe limit! (42°C)', {
+                temperature: 42,
+                threshold: 35
+            });
+            updateStatus();
+        }
+
+        function testAnimalDetection() {
+            log('Testing ANIMAL_DETECTED alert...');
+            window.alertSystem.trigger('ANIMAL_DETECTED', 'Test: Wild Boar detected near crops!', {
+                threat: 'Wild Boar',
+                timestamp: new Date().toISOString()
+            });
+            updateStatus();
+        }
+
+        function testSensorDisconnect() {
+            log('Testing SENSOR_DISCONNECTED alert...');
+            window.alertSystem.trigger('SENSOR_DISCONNECTED', 'Test: Sensor connection lost!', {});
+            updateStatus();
+        }
+
+        function testMotorAutoOff() {
+            log('Testing MOTOR_AUTO_OFF alert...');
+            window.alertSystem.trigger('MOTOR_AUTO_OFF', 'Test: Motor auto-stopped after 5 minutes', {
+                duration: 300000
+            });
+            updateStatus();
+        }
+
+        function testCooldown() {
+            log('Testing cooldown system...');
+            window.alertSystem.trigger('DRY_SOIL', 'First alert');
+            setTimeout(() => {
+                log('Triggering second alert (should be blocked by cooldown)...');
+                window.alertSystem.trigger('DRY_SOIL', 'Second alert (blocked)');
+            }, 2000);
+            updateStatus();
+        }
+
+        function testMute() {
+            log('Testing mute functionality...');
+            window.alertSystem.toggleSetting('mutedAlerts', ['dry_soil']);
+            log('DRY_SOIL alerts muted');
+            window.alertSystem.trigger('DRY_SOIL', 'This should be muted');
+            setTimeout(() => {
+                window.alertSystem.toggleSetting('mutedAlerts', []);
+                log('DRY_SOIL alerts unmuted');
+            }, 5000);
+            updateStatus();
+        }
+
+        function testVoiceAlert() {
+            log('Testing voice alert...');
+            const message = 'This is a test voice alert. Namaste! यह एक परीक्षण है।';
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(message);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                speechSynthesis.speak(utterance);
+                log('Voice alert triggered');
+            } else {
+                log('ERROR: Speech synthesis not supported');
+            }
+        }
+
+        async function testBuzzer() {
+            log('Testing buzzer trigger...');
+            try {
+                const response = await fetch('http://localhost:5000/buzzer/trigger', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        alert_type: 'TEST',
+                        duration: 2000,
+                        pattern: 'single'
+                    })
+                });
+                const result = await response.json();
+                log('Buzzer response: ' + JSON.stringify(result));
+            } catch (error) {
+                log('ERROR: ' + error.message);
+            }
+        }
+
+        function showStatistics() {
+            const stats = window.alertSystem.getStatistics();
+            log('=== ALERT STATISTICS ===');
+            log('Total Alerts: ' + stats.total);
+            log('Last Hour: ' + stats.lastHour);
+            log('Last 24 Hours: ' + stats.last24Hours);
+            log('By Type: ' + JSON.stringify(stats.byType, null, 2));
+            updateStatus();
+        }
+
+        function exportHistory() {
+            log('Exporting alert history...');
+            window.alertSystem.exportHistory();
+            log('Export complete');
+        }
+
+        function clearHistory() {
+            if (confirm('Clear all alert history?')) {
+                log('Clearing alert history...');
+                window.alertSystem.clearHistory();
+                log('History cleared');
+                updateStatus();
+            }
+        }
+
+        function showState() {
+            const state = window.alertSystem.getState();
+            log('=== ALERT SYSTEM STATE ===');
+            log(JSON.stringify(state, null, 2));
+        }
+
+        function startDetection() {
+            log('Starting animal detection...');
+            window.alertSystem.startAnimalDetection();
+            log('Animal detection started (15s polling)');
+            updateStatus();
+        }
+
+        function stopDetection() {
+            log('Stopping animal detection...');
+            window.alertSystem.stopAnimalDetection();
+            log('Animal detection stopped');
+            updateStatus();
+        }
+
+        async function checkDetection() {
+            log('Checking animal detection...');
+            try {
+                const response = await fetch('http://localhost:5000/api/detect');
+                const data = await response.json();
+                log('Detection result: ' + JSON.stringify(data));
+            } catch (error) {
+                log('ERROR: ' + error.message);
+            }
+        }
+
+        function log(message) {
+            const time = new Date().toLocaleTimeString();
+            const logOutput = document.getElementById('logOutput');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `<span class="log-time">[${time}]</span> ${message}`;
+            logOutput.appendChild(entry);
+            logOutput.scrollTop = logOutput.scrollHeight;
+            console.log(message);
+        }
+
+        function updateStatus() {
+            const state = window.alertSystem.getState();
+            document.getElementById('voiceStatus').textContent = state.voiceEnabled ? '✅ Enabled' : '❌ Disabled';
+            document.getElementById('buzzerStatus').textContent = state.buzzerEnabled ? '✅ Enabled' : '❌ Disabled';
+            document.getElementById('animalStatus').textContent = state.animalDetectionEnabled ? '✅ Enabled' : '❌ Disabled';
+            document.getElementById('activeAlerts').textContent = state.activeAlerts.length;
+            document.getElementById('totalHistory').textContent = state.alertHistory.length;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            log('Alert system loaded');
+            updateStatus();
+            setInterval(updateStatus, 5000); // Update every 5 seconds
+        });
+    </script>
+</body>
+</html>

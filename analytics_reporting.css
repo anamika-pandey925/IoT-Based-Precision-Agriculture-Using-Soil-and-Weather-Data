@@ -1,0 +1,456 @@
+/* ========================================
+   STEP 13: ANALYTICS & REPORTING STYLES
+======================================== */
+
+/* Analytics Section */
+.analytics-section {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.analytics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.analytics-header h2 {
+    margin: 0;
+    font-size: 28px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.analytics-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.date-input {
+    padding: 10px 15px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.date-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Analytics Grid */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.analytics-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.analytics-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.analytics-card h3 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Metrics Grid */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.metric-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.metric-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #667eea;
+}
+
+/* Trend Content */
+.trend-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.trend-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.trend-label {
+    font-size: 14px;
+    color: #666;
+}
+
+.trend-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Charts Section */
+.charts-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.chart-container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container h3 {
+    margin: 0 0 20px 0;
+    font-size: 16px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chart-container canvas {
+    max-height: 300px;
+}
+
+/* Predictions Section */
+.predictions-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.predictions-section h3 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.predictions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.prediction-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.prediction-header {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+
+.prediction-value {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.prediction-confidence {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+/* Reports Section */
+.reports-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.reports-section h3 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reports-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.reports-controls button {
+    flex: 1;
+    min-width: 150px;
+}
+
+.reports-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.report-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.report-item:hover {
+    background: #e9ecef;
+}
+
+.report-header {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.report-type {
+    font-weight: bold;
+    color: #333;
+}
+
+.report-date {
+    font-size: 12px;
+    color: #666;
+}
+
+.report-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-sm {
+    padding: 8px 12px;
+    background: #667eea;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-sm:hover {
+    background: #764ba2;
+    transform: translateY(-2px);
+}
+
+/* Customization Section */
+.customization-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.customization-section h3 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.customization-controls {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.customization-controls label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+.customization-controls input[type="radio"] {
+    cursor: pointer;
+}
+
+/* Layout Variants */
+.analytics-section.layout-compact .charts-section {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.analytics-section.layout-detailed .charts-section {
+    grid-template-columns: 1fr;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .analytics-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .analytics-controls {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .date-input {
+        width: 100%;
+    }
+    
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .charts-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .predictions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .report-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .report-actions {
+        width: 100%;
+    }
+    
+    .customization-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .analytics-card,
+    .chart-container,
+    .predictions-section,
+    .reports-section,
+    .customization-section {
+        background: #1a1a1a;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    .analytics-header h2,
+    .analytics-card h3,
+    .chart-container h3,
+    .predictions-section h3,
+    .reports-section h3,
+    .customization-section h3,
+    .metric-label,
+    .trend-label,
+    .report-type,
+    .customization-controls label {
+        color: #fff;
+    }
+    
+    .metric-item,
+    .trend-item,
+    .reports-list,
+    .report-item {
+        background: #2a2a2a;
+    }
+    
+    .date-input {
+        background: #2a2a2a;
+        color: #fff;
+        border-color: #444;
+    }
+    
+    .date-input:focus {
+        border-color: #667eea;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .analytics-controls,
+    .reports-controls,
+    .customization-controls,
+    .report-actions {
+        display: none;
+    }
+    
+    .analytics-card,
+    .chart-container,
+    .predictions-section,
+    .reports-section,
+    .customization-section {
+        page-break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}

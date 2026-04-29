@@ -1,0 +1,432 @@
+/* ========================================
+   STEP 12: CLOUD SYNC & BACKUP STYLES
+======================================== */
+
+/* Cloud Sync Indicator */
+.cloud-sync-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    color: #fff;
+}
+
+.cloud-sync-indicator:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.cloud-sync-indicator i {
+    font-size: 16px;
+}
+
+.cloud-sync-indicator.status-success {
+    background: rgba(55, 178, 77, 0.2);
+    border: 1px solid rgba(55, 178, 77, 0.3);
+}
+
+.cloud-sync-indicator.status-success i {
+    color: #37b24d;
+}
+
+.cloud-sync-indicator.status-warning {
+    background: rgba(250, 176, 5, 0.2);
+    border: 1px solid rgba(250, 176, 5, 0.3);
+}
+
+.cloud-sync-indicator.status-warning i {
+    color: #fab005;
+}
+
+.cloud-sync-indicator.status-error {
+    background: rgba(250, 82, 82, 0.2);
+    border: 1px solid rgba(250, 82, 82, 0.3);
+}
+
+.cloud-sync-indicator.status-error i {
+    color: #fa5252;
+}
+
+.cloud-sync-indicator.status-syncing {
+    background: rgba(76, 110, 245, 0.2);
+    border: 1px solid rgba(76, 110, 245, 0.3);
+}
+
+.cloud-sync-indicator.status-syncing i {
+    color: #4c6ef5;
+}
+
+/* Cloud Sync Panel */
+.cloud-sync-panel {
+    position: fixed;
+    top: 0;
+    right: -500px;
+    width: 500px;
+    height: 100vh;
+    background: #fff;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    z-index: 10000;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+}
+
+.cloud-sync-panel.active {
+    right: 0;
+}
+
+.cloud-sync-panel .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.cloud-sync-panel .panel-header h3 {
+    margin: 0;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cloud-sync-panel .close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.cloud-sync-panel .close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.cloud-sync-panel .panel-content {
+    padding: 20px;
+}
+
+.cloud-sync-panel .panel-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.cloud-sync-panel .panel-section h4 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Sync Status Grid */
+.sync-status-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.status-item {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.status-item .status-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-item .status-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Sync Actions */
+.sync-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.sync-actions button {
+    flex: 1;
+    min-width: 150px;
+}
+
+/* Backup History */
+.backup-history {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.backup-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.backup-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.backup-card .backup-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.backup-card .backup-header i {
+    font-size: 20px;
+    color: #667eea;
+}
+
+.backup-card .backup-id {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.backup-card .backup-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.backup-card .backup-detail {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+}
+
+.backup-card .backup-detail .detail-label {
+    color: #666;
+}
+
+.backup-card .backup-detail .detail-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.backup-card .btn-restore {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.backup-card .btn-restore:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Data Statistics */
+.data-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.stat-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.stat-card .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.stat-card .stat-content {
+    flex: 1;
+}
+
+.stat-card .stat-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-card .stat-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Conflict Resolution */
+.conflict-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.conflict-item {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #fab005;
+}
+
+.conflict-item .conflict-header {
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.conflict-item .conflict-options {
+    display: flex;
+    gap: 10px;
+}
+
+.conflict-item .btn-conflict {
+    flex: 1;
+    padding: 10px;
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+
+.conflict-item .btn-conflict:hover {
+    background: #667eea;
+    color: #fff;
+    border-color: #667eea;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cloud-sync-panel {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .sync-status-grid,
+    .data-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cloud-sync-indicator {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .cloud-sync-indicator span {
+        display: none;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .cloud-sync-panel {
+        background: #1a1a1a;
+    }
+    
+    .cloud-sync-panel .panel-section {
+        background: #2a2a2a;
+    }
+    
+    .status-item,
+    .backup-card,
+    .stat-card {
+        background: #333;
+    }
+    
+    .status-item .status-value,
+    .backup-card .backup-id,
+    .backup-card .backup-detail .detail-value,
+    .stat-card .stat-value,
+    .conflict-item .conflict-header {
+        color: #fff;
+    }
+    
+    .status-item .status-label,
+    .backup-card .backup-detail .detail-label,
+    .stat-card .stat-label {
+        color: #aaa;
+    }
+    
+    .conflict-item {
+        background: #333;
+    }
+    
+    .conflict-item .btn-conflict {
+        background: #2a2a2a;
+        border-color: #444;
+        color: #fff;
+    }
+}
+
+/* Loading Animation */
+@keyframes cloudPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.cloud-sync-indicator.status-syncing i {
+    animation: cloudPulse 1.5s ease-in-out infinite;
+}

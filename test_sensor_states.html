@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEP 3: Sensor States Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #00ff9d;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .state-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .state-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            transition: transform 0.3s;
+        }
+        .state-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ff9d;
+        }
+        .state-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #00ff9d;
+        }
+        .sensor-display {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .sensor-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .sensor-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .sensor-sub {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: blink 2s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .green { color: #00ff9d; }
+        .red { color: #ff4757; }
+        .gray { color: #888; }
+        .dot-green { background: #00ff9d; box-shadow: 0 0 10px #00ff9d; }
+        .dot-red { background: #ff4757; box-shadow: 0 0 10px #ff4757; }
+        .dot-gray { background: #888; }
+        .code-block {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+        }
+        .legend {
+            background: rgba(0, 255, 157, 0.1);
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        .legend h3 {
+            margin-top: 0;
+            color: #00ff9d;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ STEP 3: Sensor Integration States</h1>
+        
+        <div class="state-grid">
+            <!-- State 1: Backend Offline -->
+            <div class="state-card">
+                <div class="state-title">
+                    <span class="status-indicator dot-red"></span>
+                    State 1: Backend Offline
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Temperature</div>
+                    <div class="sensor-value gray">-- °C</div>
+                    <div class="sensor-sub red">⚠️ Backend server offline</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Humidity</div>
+                    <div class="sensor-value gray">-- %</div>
+                    <div class="sensor-sub red">⚠️ Backend server offline</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Soil Moisture</div>
+                    <div class="sensor-value gray">-- %</div>
+                    <div class="sensor-sub red">⚠️ Backend server offline</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Motor Status</div>
+                    <div class="sensor-value gray">Offline</div>
+                    <div class="sensor-sub red">⚠️ Backend server offline</div>
+                </div>
+                
+                <div class="code-block">
+                    <strong>Trigger:</strong> Flask server not running<br>
+                    <strong>Alert:</strong> "Backend server offline. Please start Flask server"<br>
+                    <strong>Voice:</strong> None
+                </div>
+            </div>
+
+            <!-- State 2: Sensor Disconnected -->
+            <div class="state-card">
+                <div class="state-title">
+                    <span class="status-indicator dot-red"></span>
+                    State 2: Sensor Disconnected
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Temperature</div>
+                    <div class="sensor-value gray">-- °C</div>
+                    <div class="sensor-sub red">⚠️ Sensor not connected</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Humidity</div>
+                    <div class="sensor-value gray">-- %</div>
+                    <div class="sensor-sub red">⚠️ Sensor not connected</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Soil Moisture</div>
+                    <div class="sensor-value gray">-- %</div>
+                    <div class="sensor-sub red">⚠️ Sensor not connected</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Motor Status</div>
+                    <div class="sensor-value gray">Not Connected</div>
+                    <div class="sensor-sub red">⚠️ Motor not connected</div>
+                </div>
+                
+                <div class="code-block">
+                    <strong>Trigger:</strong> Arduino not connected<br>
+                    <strong>Alert:</strong> "Sensor disconnected. Check Arduino connection"<br>
+                    <strong>Voice:</strong> "Warning. Sensor disconnected. Please check physical wiring."
+                </div>
+            </div>
+
+            <!-- State 3: Normal Operation -->
+            <div class="state-card">
+                <div class="state-title">
+                    <span class="status-indicator dot-green"></span>
+                    State 3: Normal Operation
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Temperature</div>
+                    <div class="sensor-value">25.3 °C</div>
+                    <div class="sensor-sub green">Real-time sensor data</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Humidity</div>
+                    <div class="sensor-value">65.2 %</div>
+                    <div class="sensor-sub gray">Optimal range: 40-70%</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Soil Moisture</div>
+                    <div class="sensor-value green">45.8 %</div>
+                    <div class="sensor-sub green">✓ Optimal moisture level</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Motor Status</div>
+                    <div class="sensor-value gray">OFF</div>
+                    <div class="sensor-sub gray">Standby mode</div>
+                </div>
+                
+                <div class="code-block">
+                    <strong>Trigger:</strong> Sensor connected, values normal<br>
+                    <strong>Alert:</strong> None<br>
+                    <strong>Voice:</strong> None
+                </div>
+            </div>
+
+            <!-- State 4: High Temperature -->
+            <div class="state-card">
+                <div class="state-title">
+                    <span class="status-indicator dot-green"></span>
+                    State 4: High Temperature Alert
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Temperature</div>
+                    <div class="sensor-value red">36.5 °C</div>
+                    <div class="sensor-sub green">Real-time sensor data</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Humidity</div>
+                    <div class="sensor-value">65.2 %</div>
+                    <div class="sensor-sub gray">Optimal range: 40-70%</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Soil Moisture</div>
+                    <div class="sensor-value green">45.8 %</div>
+                    <div class="sensor-sub green">✓ Optimal moisture level</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Motor Status</div>
+                    <div class="sensor-value gray">OFF</div>
+                    <div class="sensor-sub gray">Standby mode</div>
+                </div>
+                
+                <div class="code-block">
+                    <strong>Trigger:</strong> Temperature > 35°C (threshold)<br>
+                    <strong>Alert:</strong> "⚠️ High Temperature: 36.5°C"<br>
+                    <strong>Voice:</strong> "Warning. High temperature detected. 36 degrees celsius."
+                </div>
+            </div>
+
+            <!-- State 5: Low Moisture -->
+            <div class="state-card">
+                <div class="state-title">
+                    <span class="status-indicator dot-green"></span>
+                    State 5: Low Moisture (Irrigation)
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Temperature</div>
+                    <div class="sensor-value">25.3 °C</div>
+                    <div class="sensor-sub green">Real-time sensor data</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Humidity</div>
+                    <div class="sensor-value">65.2 %</div>
+                    <div class="sensor-sub gray">Optimal range: 40-70%</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Soil Moisture</div>
+                    <div class="sensor-value red">35.2 %</div>
+                    <div class="sensor-sub red">⚠️ Dry soil - irrigation needed</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Motor Status</div>
+                    <div class="sensor-value green">ON</div>
+                    <div class="sensor-sub green">✓ Irrigation in progress</div>
+                </div>
+                
+                <div class="code-block">
+                    <strong>Trigger:</strong> Moisture < 40% (threshold)<br>
+                    <strong>Alert:</strong> "💧 Low Soil Moisture: 35.2%"<br>
+                    <strong>Voice:</strong> "Alert. Dry soil detected. Moisture level is 35 percent."
+                </div>
+            </div>
+
+            <!-- State 6: Water Overflow -->
+            <div class="state-card">
+                <div class="state-title">
+                    <span class="status-indicator dot-green"></span>
+                    State 6: Water Overflow (Critical)
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Temperature</div>
+                    <div class="sensor-value">25.3 °C</div>
+                    <div class="sensor-sub green">Real-time sensor data</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Humidity</div>
+                    <div class="sensor-value">65.2 %</div>
+                    <div class="sensor-sub gray">Optimal range: 40-70%</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Soil Moisture</div>
+                    <div class="sensor-value red">92.5 %</div>
+                    <div class="sensor-sub red">⚠️ Water overflow detected</div>
+                </div>
+                
+                <div class="sensor-display">
+                    <div class="sensor-label">Motor Status</div>
+                    <div class="sensor-value red">FORCED OFF</div>
+                    <div class="sensor-sub red">⚠️ Safety cutoff activated</div>
+                </div>
+                
+                <div class="code-block">
+                    <strong>Trigger:</strong> Moisture > 90%<br>
+                    <strong>Alert:</strong> "🚨 Water Overflow! Motor Disabled for Safety"<br>
+                    <strong>Voice:</strong> "Critical alert. Water overflow detected. Motor has been disabled."
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3>📊 Visual Indicators Legend</h3>
+            <div class="legend-item">
+                <span class="status-indicator dot-green"></span>
+                <strong>Green Dot:</strong> System online, sensor connected
+            </div>
+            <div class="legend-item">
+                <span class="status-indicator dot-red"></span>
+                <strong>Red Dot:</strong> Backend offline or sensor disconnected
+            </div>
+            <div class="legend-item">
+                <span class="green">●</span>
+                <strong>Green Text:</strong> Optimal/Good condition
+            </div>
+            <div class="legend-item">
+                <span class="red">●</span>
+                <strong>Red Text:</strong> Alert/Warning condition
+            </div>
+            <div class="legend-item">
+                <span class="gray">●</span>
+                <strong>Gray Text:</strong> Offline/Disconnected/Standby
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,189 @@
+/* ========================================
+   STEP 4: MOTOR CONTROL STYLES
+======================================== */
+
+/* Motor Run Time Display */
+.motor-run-time {
+    margin-top: 15px;
+    padding: 12px;
+    background: rgba(0, 255, 157, 0.05);
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    border-radius: 10px;
+    font-size: 0.85rem;
+}
+
+.run-time-label {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.run-time-value {
+    color: var(--text-main);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.run-time-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.run-time-fill {
+    height: 100%;
+    background: var(--success-color);
+    border-radius: 3px;
+    transition: width 0.3s ease, background 0.3s ease;
+    box-shadow: 0 0 10px currentColor;
+}
+
+/* Motor Settings Section */
+.setting-section {
+    border-top: 1px solid var(--glass-border);
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.setting-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+}
+
+.setting-item small {
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+/* Motor Card Enhancements */
+#motorCard {
+    position: relative;
+}
+
+#motorCard.motor-running {
+    border-color: var(--success-color);
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
+}
+
+#motorCard.motor-overflow {
+    border-color: var(--danger-color);
+    box-shadow: 0 0 20px rgba(255, 71, 87, 0.2);
+    animation: pulse-danger 2s infinite;
+}
+
+@keyframes pulse-danger {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 71, 87, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(255, 71, 87, 0.4);
+    }
+}
+
+/* Motor Control Buttons (for manual control) */
+.motor-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.motor-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.motor-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.motor-btn.btn-on {
+    border-color: var(--success-color);
+    color: var(--success-color);
+}
+
+.motor-btn.btn-on:hover {
+    background: rgba(0, 255, 157, 0.1);
+}
+
+.motor-btn.btn-off {
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+}
+
+.motor-btn.btn-off:hover {
+    background: rgba(255, 71, 87, 0.1);
+}
+
+.motor-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Motor Statistics Display */
+.motor-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.motor-stat-item {
+    text-align: center;
+}
+
+.motor-stat-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.motor-stat-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .motor-run-time {
+        font-size: 0.8rem;
+    }
+    
+    .run-time-value {
+        font-size: 1rem;
+    }
+    
+    .motor-controls {
+        flex-direction: column;
+    }
+    
+    .motor-stats {
+        grid-template-columns: 1fr;
+    }
+}
