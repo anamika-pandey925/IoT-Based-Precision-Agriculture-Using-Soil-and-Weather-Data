@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   FaCloudSun, FaCalendarDays, FaLightbulb, FaWheatAwn,
-  FaDroplet, FaWind, FaSync,
+  FaDroplet, FaWind, FaArrowsRotate,
 } from 'react-icons/fa6';
 import useWeather from '../hooks/useWeather';
 import LoadingSpinner from '../components/common/LoadingSpinner';
@@ -23,7 +23,7 @@ function WeatherPage() {
       <div className={styles.header}>
         <h1 className="section-title"><FaCloudSun aria-hidden="true" /> Weather &amp; Farming</h1>
         <button className="btn btn-secondary" onClick={refresh} aria-label="Refresh weather">
-          <FaSync aria-hidden="true" /> Refresh
+          <FaArrowsRotate aria-hidden="true" /> Refresh
         </button>
       </div>
 

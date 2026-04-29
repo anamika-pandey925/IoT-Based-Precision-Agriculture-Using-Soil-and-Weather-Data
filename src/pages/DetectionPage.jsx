@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaPaw, FaFire, FaChartBar, FaDownload, FaSync } from 'react-icons/fa6';
+import { FaPaw, FaFire, FaChartBar, FaDownload, FaArrowsRotate } from 'react-icons/fa6';
 import useAnimalDetection from '../hooks/useAnimalDetection';
 import styles from './DetectionPage.module.css';
 
@@ -102,7 +102,7 @@ function DetectionPage() {
           <FaDownload aria-hidden="true" /> Export History
         </button>
         <button className="btn btn-secondary" onClick={() => window.location.reload()}>
-          <FaSync aria-hidden="true" /> Refresh Stats
+          <FaArrowsRotate aria-hidden="true" /> Refresh Stats
         </button>
       </div>
     </div>

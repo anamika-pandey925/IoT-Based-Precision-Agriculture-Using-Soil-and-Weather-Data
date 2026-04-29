@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaIndianRupeeSign, FaCoins, FaBell, FaSync, FaArrowUp, FaArrowDown, FaArrowRight } from 'react-icons/fa6';
+import { FaIndianRupeeSign, FaCoins, FaBell, FaArrowsRotate, FaArrowUp, FaArrowDown, FaArrowRight } from 'react-icons/fa6';
 import useMarketData from '../hooks/useMarketData';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import styles from './MarketPage.module.css';
@@ -45,7 +45,7 @@ function MarketPage() {
       <div className={styles.header}>
         <h1 className="section-title"><FaIndianRupeeSign aria-hidden="true" /> Market &amp; Profit</h1>
         <button className="btn btn-secondary" onClick={refresh} aria-label="Refresh market data">
-          <FaSync aria-hidden="true" /> Refresh
+          <FaArrowsRotate aria-hidden="true" /> Refresh
         </button>
       </div>
       <p className={styles.lastUpdate}>Last updated: {lastUpdateStr}</p>

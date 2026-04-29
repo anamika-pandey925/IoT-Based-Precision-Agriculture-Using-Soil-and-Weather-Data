@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaThermometerHalf, FaDroplet, FaSeedling, FaSync } from 'react-icons/fa6';
+import { FaTemperatureHalf, FaDroplet, FaSeedling } from 'react-icons/fa6';
 import { useSensor } from '../context/SensorContext';
 import { useSettings } from '../context/SettingsContext';
 import StatusBanner from '../components/common/StatusBanner';
@@ -83,7 +83,7 @@ function DashboardPage() {
           title="Temperature"
           value={val('temperature')}
           unit="°C"
-          icon={<FaThermometerHalf />}
+          icon={<FaTemperatureHalf />}
           colorClass="temp"
           subText={getSubText('temperature')}
           subVariant={getSubVariant('temperature')}
